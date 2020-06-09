@@ -2,4 +2,4 @@
 
 ![haxo](haxo.jpg)
 
-List deb, rpms, pip and npm packages installed in a docker image.
+List deb, rpm, pip and npm packages installed in a docker image.
