@@ -87,7 +87,24 @@ def apt_pkgs(img_name):
     stop_rm_container(sha_id)
     return pkgs
 
+
+def apt_licenses(img_name):
+    """get licenses of apt pkgs from an image."""
+    img = get_image(img_name)
+    sha_id = deamonize_image(img)
+    cmd = 'bash -c "for pkg in `dpkg-query -Wf \'${Package}\n\'`; do lc=`cat /usr/share/doc/$pkg/copyright 2>/dev/null`; echo $pkg,LFILE: $lc; done"'
+    pkgs = "Package,License\n"
+    pkgs += run_docker_cmd(sha_id, cmd)
+    stop_rm_container(sha_id)
+    return pkgs
+
+def npm_pkgs(image_name):
+    """get node packages installed in an image."""
+    #TODO(unrahul): npm list -g --json=true and parse
+    pass
+
 if __name__ == "__main__":
     print(pip_pkgs("hylang"), file=open("hylang-pip.csv", "w"))
     print(rpm_pkgs("fedora"), file=open("fedora-rpm.csv", "w"))
     print(apt_pkgs("ubuntu"), file=open("ubuntu-apt.csv", "w"))
+    print(apt_licenses("ubuntu") , file=open("ubuntu-apt-lc.csv", "w"))
