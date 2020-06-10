@@ -49,7 +49,7 @@ List deb, rpm, pip and npm packages installed in a docker image.
 -  -------------  ------  --------------------------
 ```
 
-- rpm packagees with versions and licenses
+- rpm packages with versions and licenses
 
 ```bash
 -  -------------------------    ----------  ------------------
