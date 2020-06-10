@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>pkg_info.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>pkg_info.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">subprocess</span> <span class="k">as</span> <span class="nn">sps</span>
+<span class="kn">import</span> <span class="nn">shlex</span> <span class="k">as</span> <span class="nn">sx</span>
+
+<span class="kn">from</span> <span class="nn">constants</span> <span class="kn">import</span> <span class="n">LOGGER</span>
+<span class="kn">from</span> <span class="nn">constants</span> <span class="kn">import</span> <span class="n">SPDX</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>get docker image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;hylang&quot;</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;docker pull </span><span class="si">{name}</span><span class="s2">&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">sx</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">sps</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">deamonize_image</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;docker run -dt </span><span class="si">{name}</span><span class="s2">&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">sx</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">sps</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>run a command with a image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">run_docker_cmd</span><span class="p">(</span><span class="n">sha_id</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;docker exec -ti </span><span class="si">{sha_id}</span><span class="s2"> </span><span class="si">{cmd}</span><span class="s2">&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">sx</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;running command: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">sps</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>stop a docker container.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">_stop_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;docker stop </span><span class="si">{sha_id}</span><span class="s2">&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">sx</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;running command: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+    <span class="n">sps</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">sps</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>stop a docker container.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">_remove_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;docker rm </span><span class="si">{sha_id}</span><span class="s2">&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">sx</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;running command: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+    <span class="n">sps</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">sps</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">stop_rm_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">):</span>
+    <span class="n">_stop_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">)</span>
+    <span class="n">_remove_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>get python packages installed in an image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">pip_pkgs</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">img</span> <span class="o">=</span> <span class="n">get_image</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
+    <span class="n">sha_id</span> <span class="o">=</span> <span class="n">deamonize_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">run_docker_cmd</span><span class="p">(</span><span class="n">sha_id</span><span class="p">,</span> <span class="s2">&quot;pip install pip-licenses&quot;</span><span class="p">)</span>
+    <span class="n">pkgs</span> <span class="o">=</span> <span class="n">run_docker_cmd</span><span class="p">(</span><span class="n">sha_id</span><span class="p">,</span> <span class="s2">&quot;pip-licenses -f=csv --from=mixed&quot;</span><span class="p">)</span>
+    <span class="n">stop_rm_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pkgs</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>get rpm packages installed in an image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">rpm_pkgs</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">img</span> <span class="o">=</span> <span class="n">get_image</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
+    <span class="n">sha_id</span> <span class="o">=</span> <span class="n">deamonize_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">pkgs</span> <span class="o">=</span> <span class="s2">&quot;Package,Version,License</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">pkgs</span> <span class="o">+=</span> <span class="n">run_docker_cmd</span><span class="p">(</span><span class="n">sha_id</span><span class="p">,</span> <span class="s2">&quot;rpm -qa --qf &#39;%</span><span class="si">{NAME}</span><span class="s2">,%</span><span class="si">{VERSION}</span><span class="s2">,%</span><span class="si">{LICENSE}</span><span class="se">\n</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="n">stop_rm_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pkgs</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      <p>get apt packages installed in an image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">apt_pkgs</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">img</span> <span class="o">=</span> <span class="n">get_image</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
+    <span class="n">sha_id</span> <span class="o">=</span> <span class="n">deamonize_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;dpkg-query -Wf &#39;$</span><span class="si">{Package}</span><span class="s2">,$</span><span class="si">{Version}</span><span class="s2">,$</span><span class="si">{Source}</span><span class="se">\n</span><span class="s2">&#39;&quot;</span>
+    <span class="n">pkgs</span> <span class="o">=</span> <span class="s2">&quot;Package,Version,Source</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">pkgs</span> <span class="o">+=</span> <span class="n">run_docker_cmd</span><span class="p">(</span><span class="n">sha_id</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+    <span class="n">stop_rm_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pkgs</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">_search_spdx</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">lc</span> <span class="ow">in</span> <span class="n">SPDX</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lc</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lc</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      <p>get licenses of apt pkgs from an image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">apt_licenses</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">pkg_lcs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">get_image</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
+    <span class="n">sha_id</span> <span class="o">=</span> <span class="n">deamonize_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;bash -c </span><span class="se">\&quot;</span><span class="s2">for pkg in `dpkg-query -Wf &#39;$</span><span class="si">{Package}</span><span class="se">\n</span><span class="s2">&#39;`; do lc=`cat /usr/share/doc/$pkg/copyright 2&gt;/dev/null`; echo PKG_START $pkg PKG_END,LFILE_START $lc LFILE_END; done</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+    <span class="n">pkgs</span> <span class="o">=</span> <span class="n">run_docker_cmd</span><span class="p">(</span><span class="n">sha_id</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+    <span class="n">stop_rm_container</span><span class="p">(</span><span class="n">sha_id</span><span class="p">)</span>
+    <span class="n">pkg</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;PKG_START(.*?)PKG_END&quot;</span><span class="p">,</span> <span class="n">pkgs</span><span class="p">)</span>
+    <span class="n">license</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;LFILE_START(.*?)LFILE_END&quot;</span><span class="p">,</span> <span class="n">pkgs</span><span class="p">)</span>
+    <span class="n">pkg_lcs</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span> <span class="n">_search_spdx</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">license</span><span class="p">)}</span>
+    <span class="n">pkgs</span> <span class="o">=</span> <span class="s2">&quot;Package,License</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">pkg</span><span class="p">,</span> <span class="n">lc</span> <span class="ow">in</span> <span class="n">pkg_lcs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pkgs</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">,</span><span class="si">{1}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">lc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pkgs</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      <p>get node packages installed in an image.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">npm_pkgs</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <p>TODO(unrahul): npm list -g &ndash;json=true and parse</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">pass</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pip_pkgs</span><span class="p">(</span><span class="s2">&quot;hylang&quot;</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/pip-pkg-lc.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">rpm_pkgs</span><span class="p">(</span><span class="s2">&quot;fedora&quot;</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/fedora-pkg-lc.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">apt_pkgs</span><span class="p">(</span><span class="s2">&quot;ubuntu&quot;</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/ubuntu-apt-version.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">apt_licenses</span><span class="p">(</span><span class="s2">&quot;ubuntu&quot;</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/ubuntu-pkg-lc.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">))</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
