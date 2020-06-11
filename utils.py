@@ -27,6 +27,15 @@ def image_sha_name(name: str) -> bool:
     out = sps.run(cmd, stdout=sps.PIPE, shell=False).stdout.decode("utf-8")
     LOGGER.debug(out)
     out = out[out.find(name) - 12 : out.find(name) + len(name)]
+    if not out:
+        LOGGER.info("pulling the image %s" % (name))
+        cmd = "docker pull {}".format(name)
+        cmd = sx.split(cmd)
+        if sps.run(cmd, stdout=sps.PIPE, shell=False).stdout:
+            image_sha_name(name)
+        else:
+            LOGGER.error("Image not found locally and unable to pull %s" % (name))
+            exit(1)
     return out.split(",")
 
 
