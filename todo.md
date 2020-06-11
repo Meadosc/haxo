@@ -2,7 +2,7 @@ TODO
 ----
 
 - ~~cli for apt,rpm~~
---~~async/concurrent jobs for long running tasks~~
+- -~~async/concurrent jobs for long running tasks~~
 - cli to create report for all available pkg manager
 - spdx - with key and license name string
 - entrypoint installer script
