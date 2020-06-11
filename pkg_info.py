@@ -62,7 +62,7 @@ def pip_pkgs(img_name):
     run_docker_cmd(sha_id, "pip install pip-licenses")
     pkgs = run_docker_cmd(sha_id, "pip-licenses -f=csv --from=mixed")
     stop_rm_container(sha_id)
-    return pkgs
+    return pkgs, sha_id
 
 
 def rpm_pkgs(img_name):
@@ -72,7 +72,7 @@ def rpm_pkgs(img_name):
     pkgs = "Package,Version,License\n"
     pkgs += run_docker_cmd(sha_id, "rpm -qa --qf '%{NAME},%{VERSION},%{LICENSE}\n'")
     stop_rm_container(sha_id)
-    return pkgs
+    return pkgs, sha_id
 
 
 def apt_pkgs(img_name):
@@ -83,13 +83,20 @@ def apt_pkgs(img_name):
     pkgs = "Package,Version,Source\n"
     pkgs += run_docker_cmd(sha_id, cmd)
     stop_rm_container(sha_id)
-    return pkgs
+    return pkgs, sha_id
 
 
 def _search_spdx(string):
+    lcs = []
+    tricky = ["GPL", "LGPL", "BSD"]
     for lc in SPDX:
         if lc in string:
-            return lc
+            lcs.append(lc)
+    for t in tricky:
+        for l in lcs:
+            if l.startswith(t) and t in lcs and l != t:
+                lcs.remove(t) 
+    return ";".join(lcs)
 
 
 def apt_licenses(img_name):
@@ -106,7 +113,7 @@ def apt_licenses(img_name):
     pkgs = "Package,License\n"
     for pkg, lc in pkg_lcs.items():
         pkgs += "{0},{1}\n".format(pkg, lc)
-    return pkgs
+    return pkgs, sha_id
 
 
 def npm_pkgs(image_name):
