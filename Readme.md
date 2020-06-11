@@ -4,6 +4,26 @@
 
 List deb, rpm, pip and npm packages installed in a docker image.
 
+### Usage
+
+```
+Usage: haxo.py [OPTIONS] COMMAND [ARGS]...
+
+  Haxo - look inside a docker image.
+
+  This tool can be used to get information on system packages installed in a
+  container image using package managers such as apt, dnf, rpm, pip and npm.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  apt           apt package info.
+  apt-licenses  apt packages and licenses info.
+  pip           pip package info.
+  rpm           rpm package info.
+```
+
 - apt packages with Licenses
 
 ```bash
