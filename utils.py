@@ -12,7 +12,7 @@ from constants import LOGGER
 def csv2markdown(name):
     """convert csv files to markdown."""
     csv_df = pandas.read_csv(name, header=0)
-    return tabulate(csv_df,headers="keys",tablefmt="rst" )
+    return tabulate(csv_df, headers="keys", tablefmt="rst")
 
 
 def image_sha_name(name: str) -> bool:
@@ -35,5 +35,5 @@ if __name__ == "__main__":
     # print(csv2markdown("./data/fedora-pkg-lc.csv"))
     # print(csv2markdown("./data/pip-pkg-lc.csv"))
     # print(csv2markdown("./data/ubuntu-apt-version.csv"))
-    #print(image_sha_name("hylang"))
+    # print(image_sha_name("hylang"))
     pass

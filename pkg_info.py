@@ -95,7 +95,7 @@ def _search_spdx(string):
     for t in tricky:
         for l in lcs:
             if l.startswith(t) and t in lcs and l != t:
-                lcs.remove(t) 
+                lcs.remove(t)
     return ";".join(lcs)
 
 

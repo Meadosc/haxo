@@ -52,12 +52,13 @@ def apt_lic(image, format="csv", license="spdx", show=False):
         try:
             pkgs, _ = apt_licenses(image)
         except Exception as exc:
-            LOGGER.error('%r generated an exception: %s' % (image, exc))
+            LOGGER.error("%r generated an exception: %s" % (image, exc))
             exit(1)
         else:
             print(pkgs, file=open(fname, "w"))
     if show:
         print(csv2markdown(fname))
+
 
 @cli.command("apt")
 @click.argument("image", type=str)
@@ -85,7 +86,7 @@ def apt(image, format="csv", license="spdx", show=False):
         try:
             pkgs, _ = apt_pkgs(image)
         except Exception as exc:
-            LOGGER.error('%r generated an exception: %s' % (image, exc))
+            LOGGER.error("%r generated an exception: %s" % (image, exc))
             exit(1)
         else:
             print(pkgs, file=open(fname, "w"))
@@ -119,7 +120,7 @@ def rpm(image, format="csv", license="spdx", show=False):
         try:
             pkgs, _ = rpm_pkgs(image)
         except Exception as exc:
-            LOGGER.error('%r generated an exception: %s' % (image, exc))
+            LOGGER.error("%r generated an exception: %s" % (image, exc))
             exit(1)
         else:
             print(pkgs, file=open(fname, "w"))
@@ -153,7 +154,7 @@ def pip(image, format="csv", license="spdx", show=False):
         try:
             pkgs, _ = pip_pkgs(image)
         except Exception as exc:
-            LOGGER.error('%r generated an exception: %s' % (image, exc))
+            LOGGER.error("%r generated an exception: %s" % (image, exc))
             exit(1)
         else:
             print(pkgs, file=open(fname, "w"))
