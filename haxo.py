@@ -1,18 +1,7 @@
 """entry point script."""
-import os
-
-import concurrent.futures
 import click
-import pandas as pd
 
-from constants import LOGGER
-from pkg_info import apt_pkgs
-from pkg_info import apt_licenses
-from pkg_info import npm_pkgs
-from pkg_info import pip_pkgs
-from pkg_info import rpm_pkgs
-from utils import image_sha_name
-from utils import csv2markdown
+from pkg_info import runner
 
 
 @click.group()
@@ -45,19 +34,7 @@ def apt_lic(image, format="csv", license="spdx", show=False):
     license: str - license format
     show: bool - show output to screen
     """
-    sha_id, _ = image_sha_name(image)
-    fname = "data/apt-lc-pkgs-{}-{}.{}".format(image.split(":")[0], sha_id[:5], format)
-    if not os.path.isfile(fname):
-        LOGGER.info("metadata not cached, extracting..")
-        try:
-            pkgs, _ = apt_licenses(image)
-        except Exception as exc:
-            LOGGER.error("%r generated an exception: %s" % (image, exc))
-            exit(1)
-        else:
-            print(pkgs, file=open(fname, "w"))
-    if show:
-        print(csv2markdown(fname))
+    runner(image, pkg_manager="apt-lic", format=format, license=license, show=show)
 
 
 @cli.command("apt")
@@ -79,19 +56,7 @@ def apt(image, format="csv", license="spdx", show=False):
     license: str - license format
     show: bool - show output to screen
     """
-    sha_id, _ = image_sha_name(image)
-    fname = "data/apt-pkgs-{}-{}.{}".format(image.split(":")[0], sha_id[:5], format)
-    if not os.path.isfile(fname):
-        LOGGER.info("metadata not cached, extracting..")
-        try:
-            pkgs, _ = apt_pkgs(image)
-        except Exception as exc:
-            LOGGER.error("%r generated an exception: %s" % (image, exc))
-            exit(1)
-        else:
-            print(pkgs, file=open(fname, "w"))
-    if show:
-        print(csv2markdown(fname))
+    runner(image, pkg_manager="apt", format=format, license=license, show=show)
 
 
 @cli.command("rpm")
@@ -113,19 +78,7 @@ def rpm(image, format="csv", license="spdx", show=False):
     license: str - license format
     show: bool - show output to screen
     """
-    sha_id, _ = image_sha_name(image)
-    fname = "data/rpm-pkgs-{}-{}.{}".format(image.split(":")[0], sha_id[:5], format)
-    if not os.path.isfile(fname):
-        LOGGER.info("metadata not cached, extracting..")
-        try:
-            pkgs, _ = rpm_pkgs(image)
-        except Exception as exc:
-            LOGGER.error("%r generated an exception: %s" % (image, exc))
-            exit(1)
-        else:
-            print(pkgs, file=open(fname, "w"))
-    if show:
-        print(csv2markdown(fname))
+    runner(image, pkg_manager="rpm", format=format, license=license, show=show)
 
 
 @cli.command("pip")
@@ -147,19 +100,7 @@ def pip(image, format="csv", license="spdx", show=False):
     license: str - license format
     show: bool - show output to screen
     """
-    sha_id, _ = image_sha_name(image)
-    fname = "data/pip-pkgs-{}-{}.{}".format(image.split(":")[0], sha_id[:5], format)
-    if not os.path.isfile(fname):
-        LOGGER.info("metadata not cached, extracting..")
-        try:
-            pkgs, _ = pip_pkgs(image)
-        except Exception as exc:
-            LOGGER.error("%r generated an exception: %s" % (image, exc))
-            exit(1)
-        else:
-            print(pkgs, file=open(fname, "w"))
-    if show:
-        print(csv2markdown(fname))
+    runner(image, pkg_manager="pip", format=format, license=license, show=show)
 
 
 if __name__ == "__main__":

@@ -2,9 +2,13 @@ import os
 import re
 import subprocess as sps
 import shlex as sx
+from concurrent.futures import ProcessPoolExecutor as ps_exec
+
 
 from constants import LOGGER
 from constants import SPDX
+from utils import image_sha_name
+from utils import csv2markdown
 
 
 def get_image(name="hylang"):
@@ -12,8 +16,8 @@ def get_image(name="hylang"):
     cmd = f"docker pull {name}"
     cmd = sx.split(cmd)
     out = sps.run(cmd, stdout=sps.PIPE, shell=False).stdout.decode("utf-8")
-    LOGGER.debug(out)
-    return out.split()[-1].split("/")[-1]
+    LOGGER.info(out)
+    return out.split()[-1]
 
 
 def deamonize_image(name):
@@ -120,6 +124,53 @@ def npm_pkgs(image_name):
     """get node packages installed in an image."""
     # TODO(unrahul): npm list -g --json=true and parse
     pass
+
+
+def runner(image, pkg_manager, format="csv", license="spdx", show=False):
+    """universal runnner to extract metadata based on the pkg_manager.
+
+    Creates a csv(default format) file and saves it to the data directory
+
+    params
+    ------
+    image: str - docker image name with tag
+    pkg_manager: str - which pkg manager to use - apt, pip, rpm, npm
+    format: str - save file as csv
+    license: str - license format
+    show: bool - show output to screen
+    """
+    run_method = {
+        "apt-lic": apt_licenses,
+        "rpm": rpm_pkgs,
+        "pip": pip_pkgs,
+        "apt": apt_pkgs,
+        "npm": npm_pkgs,
+    }
+    sha_id, _ = image_sha_name(image)
+    fname = "data/{}-pkgs-{}-{}.{}".format(
+        pkg_manager, image.split(":")[0].split("/")[-1], sha_id[:5], format
+    )
+    LOGGER.debug("to be saved as %s " % (fname))
+    if not os.path.isfile(fname):
+        LOGGER.info("metadata not cached, extracting..")
+        with ps_exec(max_workers=10) as executor:
+            try:
+                future = executor.submit(run_method[pkg_manager], image)
+                pkgs, _ = future.result()
+                LOGGER.info("done!")
+            except Exception as exc:
+                LOGGER.error("%r generated an exception: %s" % (image, exc))
+                exit(1)
+            else:
+                try:
+                    print(pkgs, file=open(fname, "w"))
+                except FileNotFoundError as exc:
+                    LOGGER.error("generated an exception: %s" % (exc))
+    if show:
+        try:
+            print(csv2markdown(fname))
+        except FileNotFoundError as exc:
+            LOGGER.error("generated an exception: %s" % (exc))
 
 
 if __name__ == "__main__":
