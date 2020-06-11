@@ -16,7 +16,7 @@ def csv2markdown(name):
 
 
 def image_sha_name(name: str) -> bool:
-    """check if dockerfile exists.
+    """check if docker image exists.
 
     args
     ----
@@ -29,14 +29,17 @@ def image_sha_name(name: str) -> bool:
     out = out[out.find(name) - 12 : out.find(name) + len(name)]
     if not out:
         LOGGER.info("pulling the image %s" % (name))
-        cmd = "docker pull {}".format(name)
-        cmd = sx.split(cmd)
-        if sps.run(cmd, stdout=sps.PIPE, shell=False).stdout:
-            image_sha_name(name)
-        else:
-            LOGGER.error("Image not found locally and unable to pull %s" % (name))
+        cmd = sx.split("docker pull {}".format(name))
+        try:
+            if sps.run(cmd, stdout=sps.PIPE).stdout:
+                image_sha_name(name)
+        except Exception as e:
+            LOGGER.error(
+                "%s not found locally and unable to pull, exiting:  %s" % (name, e)
+            )
             exit(1)
-    return out.split(",")
+    else:
+        return out.split(",")
 
 
 if __name__ == "__main__":
