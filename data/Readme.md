@@ -1,1 +1,0 @@
-##pkgs_info output

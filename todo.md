@@ -5,6 +5,7 @@ TODO
 - cli to create report for all available pkg manager
 - spdx - with key and license name string
 - entrypoint installer script
+- check os and see if the command configuration makes sense
 - caching slow functions if files are generated
 - tests - unittests, tox.ini with pytest
 - option to dumb entire licenses to single file
