@@ -11,7 +11,7 @@ TODO
 - tests - unittests, tox.ini with pytest
 - option to dumb entire licenses to single file
 - npm pkgs info
-- dnf pkgs info
+- ~~dnf pkgs info~~
 - cli for npm
 - ~~refactor code - lot of repeations~~
 - HTML ouput
