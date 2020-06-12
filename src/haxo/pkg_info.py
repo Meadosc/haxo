@@ -1,15 +1,10 @@
 import os
 import re
-import subprocess as sps
-import shlex as sx
 from concurrent.futures import ProcessPoolExecutor as ps_exec
 
+from haxo.constants import LOGGER, SPDX
 from haxo.container import Container
-from haxo.constants import LOGGER
-from haxo.constants import SPDX
-from haxo.utils import image_sha_name
-from haxo.utils import csv2markdown
-from haxo.utils import mkdirp
+from haxo.utils import csv2markdown, image_sha_name, mkdirp
 
 
 def pip_pkgs(img_name):
@@ -40,23 +35,23 @@ def apt_pkgs(img_name):
 
 
 def _search_spdx(string):
-    lcs = []
+    lcs_parsed = []
     tricky = ["GPL", "LGPL", "BSD"]
     for lc in SPDX:
         if lc in string:
-            lcs.append(lc)
+            lcs_parsed.append(lc)
     for t in tricky:
-        for l in lcs:
-            if l.startswith(t) and t in lcs and l != t:
-                lcs.remove(t)
-    return ";".join(lcs)
+        for lcs in lcs_parsed:
+            if lcs.startswith(t) and t in lcs_parsed and lcs != t:
+                lcs_parsed.remove(t)
+    return ";".join(lcs_parsed)
 
 
 def apt_licenses(img_name):
     """get licenses of apt pkgs from an image."""
     pkg_lcs = {}
     with Container(img_name) as sha_id:
-        cmd = "bash -c \"for pkg in `dpkg-query -Wf '${Package}\n'`; do lc=`cat /usr/share/doc/$pkg/copyright 2>/dev/null`; echo PKG_START $pkg PKG_END,LFILE_START $lc LFILE_END; done\""
+        cmd = "bash -c \"for pkg in `dpkg-query -Wf '${Package}\n'`; do lc=`cat /usr/share/doc/$pkg/copyright 2>/dev/null`; echo PKG_START $pkg PKG_END,LFILE_START $lc LFILE_END; done\""  # noqa: E501
         pkgs = Container.run_docker_cmd(sha_id, cmd)
     pkg = re.findall("PKG_START(.*?)PKG_END", pkgs)
     license = re.findall("LFILE_START(.*?)LFILE_END", pkgs)

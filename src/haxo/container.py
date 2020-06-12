@@ -1,16 +1,10 @@
-import os
-import re
-import subprocess as sps
 import shlex as sx
-from concurrent.futures import ProcessPoolExecutor as ps_exec
+import subprocess as sps
 
 from haxo.constants import LOGGER
-from haxo.constants import SPDX
-from haxo.utils import image_sha_name
-from haxo.utils import csv2markdown
 
 
-class Container():
+class Container:
     """Container commands and context manager."""
 
     @staticmethod
