@@ -1,4 +1,4 @@
 __pycache__
 *.csv
-haxo.egg-info
+src/haxo.egg-info
 *.pyc
