@@ -1,8 +1,9 @@
 """entry point script."""
 import click
 
-from . import __version__
 from haxo.pkg_info import runner
+
+from . import __version__
 
 
 @click.group()
@@ -23,9 +24,9 @@ def cli():
 @click.option("--show/--no-show", default=False)
 def apt_lic(image, format="csv", license="spdx", show=False):
     """apt packages and licenses info.
-    
+
     Creates a csv file and saves it to the data directory
-    by default with name, license info of dpkg(ubuntu, debian) 
+    by default with name, license info of dpkg(ubuntu, debian)
     packages in the given image, not all package have licenses
     in the image.
 
@@ -46,9 +47,9 @@ def apt_lic(image, format="csv", license="spdx", show=False):
 @click.option("--show/--no-show", default=False)
 def apt(image, format="csv", license="spdx", show=False):
     """apt package info.
-    
+
     Creates a csv file and saves it to the data directory
-    by default with name, verson info 
+    by default with name, verson info
     of dpkg(ubuntu, debian) packages in the given image.
 
     params
@@ -68,9 +69,9 @@ def apt(image, format="csv", license="spdx", show=False):
 @click.option("--show/--no-show", default=False)
 def rpm(image, format="csv", license="spdx", show=False):
     """rpm package info.
-    
+
     Creates a csv file and saves it to the data directory
-    by default with name, verson and license info 
+    by default with name, verson and license info
     of rpm(centos, fedora, redhat) packages in the given image.
 
     params
@@ -90,9 +91,9 @@ def rpm(image, format="csv", license="spdx", show=False):
 @click.option("--show/--no-show", default=False)
 def pip(image, format="csv", license="spdx", show=False):
     """pip package info.
-    
+
     Creates a csv file and saves it to the data directory
-    by default with name, verson and license info 
+    by default with name, verson and license info
     of python packages in the given image.
 
     params
@@ -103,4 +104,3 @@ def pip(image, format="csv", license="spdx", show=False):
     show: bool - show output to screen
     """
     runner(image, pkg_manager="pip", format=format, license=license, show=show)
-

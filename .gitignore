@@ -1,4 +1,5 @@
 __pycache__
 *.csv
 src/haxo.egg-info
+src/haxo.egg-info/SOURCES.txt
 *.pyc
