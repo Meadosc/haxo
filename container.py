@@ -3,7 +3,6 @@ import re
 import subprocess as sps
 import shlex as sx
 from concurrent.futures import ProcessPoolExecutor as ps_exec
-from contextlib import ContextDecorator
 
 from constants import LOGGER
 from constants import SPDX
@@ -11,7 +10,7 @@ from utils import image_sha_name
 from utils import csv2markdown
 
 
-class Container(ContextDecorator):
+class Container():
     """Container commands and context manager."""
 
     @staticmethod
