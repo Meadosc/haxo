@@ -4,7 +4,7 @@ import logging
 log_format = "%(filename)s: %(message)s"
 logging.basicConfig(format=log_format, level=logging.DEBUG)
 LOGGER = logging.getLogger("haxo")
-LOGGER.setLevel(logging.ERROR)
+LOGGER.setLevel(logging.INFO)
 
 
 SPDX = [

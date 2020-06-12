@@ -9,6 +9,7 @@ from constants import LOGGER
 from constants import SPDX
 from utils import image_sha_name
 from utils import csv2markdown
+from utils import mkdirp
 
 
 def pip_pkgs(img_name):
@@ -113,9 +114,11 @@ def runner(image, pkg_manager, format="csv", license="spdx", show=False):
                 exit(1)
             else:
                 try:
+                    mkdirp("data")
                     print(pkgs, file=open(fname, "w"))
                 except FileNotFoundError as exc:
-                    LOGGER.error("generated an exception: %s" % (exc))
+                    LOGGER.error("%s" % (exc))
+                    exit(1)
     if show:
         try:
             print(csv2markdown(fname))

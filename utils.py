@@ -2,11 +2,16 @@
 import os
 import subprocess as sps
 import shlex as sx
+import pathlib
 
 import pandas
 from tabulate import tabulate
 
 from constants import LOGGER
+
+
+def mkdirp(path: str) -> bool:
+    return pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
 
 def csv2markdown(name):
