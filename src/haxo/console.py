@@ -1,10 +1,12 @@
 """entry point script."""
 import click
 
-from pkg_info import runner
+from . import __version__
+from haxo.pkg_info import runner
 
 
 @click.group()
+@click.version_option(version=__version__)
 def cli():
     """Haxo - look inside a docker image.
 
@@ -102,6 +104,3 @@ def pip(image, format="csv", license="spdx", show=False):
     """
     runner(image, pkg_manager="pip", format=format, license=license, show=show)
 
-
-if __name__ == "__main__":
-    cli()

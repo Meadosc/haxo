@@ -4,10 +4,10 @@ import subprocess as sps
 import shlex as sx
 from concurrent.futures import ProcessPoolExecutor as ps_exec
 
-from constants import LOGGER
-from constants import SPDX
-from utils import image_sha_name
-from utils import csv2markdown
+from haxo.constants import LOGGER
+from haxo.constants import SPDX
+from haxo.utils import image_sha_name
+from haxo.utils import csv2markdown
 
 
 class Container():

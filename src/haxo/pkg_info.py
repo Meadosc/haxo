@@ -4,12 +4,12 @@ import subprocess as sps
 import shlex as sx
 from concurrent.futures import ProcessPoolExecutor as ps_exec
 
-from container import Container
-from constants import LOGGER
-from constants import SPDX
-from utils import image_sha_name
-from utils import csv2markdown
-from utils import mkdirp
+from haxo.container import Container
+from haxo.constants import LOGGER
+from haxo.constants import SPDX
+from haxo.utils import image_sha_name
+from haxo.utils import csv2markdown
+from haxo.utils import mkdirp
 
 
 def pip_pkgs(img_name):

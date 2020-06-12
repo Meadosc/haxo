@@ -1,0 +1,16 @@
+setup.py
+src/haxo/__init__.py
+src/haxo/console.py
+src/haxo/constants.py
+src/haxo/container.py
+src/haxo/pkg_info.py
+src/haxo/requirements.txt
+src/haxo/utils.py
+src/haxo.egg-info/PKG-INFO
+src/haxo.egg-info/SOURCES.txt
+src/haxo.egg-info/dependency_links.txt
+src/haxo.egg-info/entry_points.txt
+src/haxo.egg-info/requires.txt
+src/haxo.egg-info/top_level.txt
+src/haxo/data/Readme.md
+src/haxo/tests/Readme.md
