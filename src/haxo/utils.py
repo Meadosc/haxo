@@ -7,7 +7,7 @@ import pathlib
 import pandas
 from tabulate import tabulate
 
-from constants import LOGGER
+from haxo.constants import LOGGER
 
 
 def mkdirp(path: str) -> bool:
