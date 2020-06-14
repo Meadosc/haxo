@@ -1,4 +1,4 @@
-## Haxo - Open up and see what's inside a docker image
+## Haxo - what's inside my docker image?
 
 ![haxo](icon.jpg)
 
