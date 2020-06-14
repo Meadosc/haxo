@@ -22,7 +22,9 @@ def cli() -> None:
 @click.option("--format", default="csv", type=str)
 @click.option("--license", default="spdx", type=str)
 @click.option("--show/--no-show", default=False)
-def apt_lic(image: str, format: str="csv", license: str="spdx", show: bool=False) -> None:
+def apt_lic(
+    image: str, format: str = "csv", license: str = "spdx", show: bool = False
+) -> None:
     """apt packages and licenses info.
 
     Creates a csv file and saves it to the data directory

@@ -19,6 +19,7 @@ def install_with_constraints(session, *args, **kwargs):
         )
         session.install(f"--constraint={req.name}", *args, **kwargs)
 
+
 @nox.session(python=["3.7"])
 def pytype(session):
     """Run the static type checker."""
@@ -51,9 +52,10 @@ def lint(session):
         "flake8-bugbear",
         "flake8-docstrings",
         "flake8-import-order",
-        "darglint"
+        "darglint",
     )
     session.run("flake8", *args)
+
 
 @nox.session(python="3.8")
 def docs(session) -> None:
