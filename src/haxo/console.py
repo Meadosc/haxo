@@ -1,4 +1,4 @@
-"""entry point script."""
+"""command line interface to access haxo, version 0.1.0."""
 import click
 
 from haxo.pkg_info import runner
@@ -8,7 +8,7 @@ from . import __version__
 
 @click.group()
 @click.version_option(version=__version__)
-def cli():
+def cli() -> None:
     """Haxo - look inside a docker image.
 
     This tool can be used to get information on system packages
@@ -22,7 +22,7 @@ def cli():
 @click.option("--format", default="csv", type=str)
 @click.option("--license", default="spdx", type=str)
 @click.option("--show/--no-show", default=False)
-def apt_lic(image, format="csv", license="spdx", show=False):
+def apt_lic(image: str, format: str="csv", license: str="spdx", show: bool=False) -> None:
     """apt packages and licenses info.
 
     Creates a csv file and saves it to the data directory
@@ -30,12 +30,12 @@ def apt_lic(image, format="csv", license="spdx", show=False):
     packages in the given image, not all package have licenses
     in the image.
 
-    params
-    ------
-    image: str - docker image name with tag
-    format: str - save file as csv
-    license: str - license format
-    show: bool - show output to screen
+   
+    Attributes:
+        image: docker image name with tag
+        format: save file as csv
+        license: license format
+        show: show output to screen
     """
     runner(image, pkg_manager="apt-lic", format=format, license=license, show=show)
 
@@ -52,12 +52,11 @@ def apt(image, format="csv", license="spdx", show=False):
     by default with name, verson info
     of dpkg(ubuntu, debian) packages in the given image.
 
-    params
-    ------
-    image: str - docker image name with tag
-    format: str - save file as csv
-    license: str - license format
-    show: bool - show output to screen
+    Attributes:
+        image: docker image name with tag
+        format: save file as csv
+        license: license format
+        show: show output to screen
     """
     runner(image, pkg_manager="apt", format=format, license=license, show=show)
 
@@ -74,12 +73,11 @@ def rpm(image, format="csv", license="spdx", show=False):
     by default with name, verson and license info
     of rpm(centos, fedora, redhat) packages in the given image.
 
-    params
-    ------
-    image: str - docker image name with tag
-    format: str - save file as csv
-    license: str - license format
-    show: bool - show output to screen
+    Attributes:
+        image: docker image name with tag
+        format: save file as csv
+        license: license format
+        show: show output to screen
     """
     runner(image, pkg_manager="rpm", format=format, license=license, show=show)
 
@@ -96,11 +94,10 @@ def pip(image, format="csv", license="spdx", show=False):
     by default with name, verson and license info
     of python packages in the given image.
 
-    params
-    ------
-    image: str - docker image name with tag
-    format: str - save file as csv
-    license: str - license format
-    show: bool - show output to screen
+    Attributes:
+        image: docker image name with tag
+        format: save file as csv
+        license: license format
+        show: show output to screen
     """
     runner(image, pkg_manager="pip", format=format, license=license, show=show)

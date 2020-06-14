@@ -1,6 +1,6 @@
 # .flake8
 [flake8]
-select = B,B9,BLK,C,E,F,I,W,S
+select = ANN,B,B9,BLK,C,D,DAR,E,F,I,S,W
 ignore = E203, W503, S603, S101, S404
 max-line-length = 95
 max-complexity = 12

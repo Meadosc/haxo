@@ -8,7 +8,7 @@ class Container:
     """Container commands and context manager."""
 
     @staticmethod
-    def get_image(name="hylang"):
+    def get_image(name: str = "hylang"):
         """get docker image."""
         cmd = f"docker pull {name}"
         cmd = sx.split(cmd)
@@ -17,7 +17,7 @@ class Container:
         return out.split()[-1]
 
     @staticmethod
-    def deamonize_image(name):
+    def deamonize_image(name: str):
         cmd = f"docker run -dt {name}"
         cmd = sx.split(cmd)
         out = sps.run(cmd, stdout=sps.PIPE, shell=False).stdout.decode("utf-8")
@@ -25,7 +25,7 @@ class Container:
         return out
 
     @staticmethod
-    def run_docker_cmd(sha_id, cmd):
+    def run_docker_cmd(sha_id: str, cmd):
         """run a command with a image."""
         cmd = f"docker exec -ti {sha_id} {cmd}"
         cmd = sx.split(cmd)
@@ -35,7 +35,7 @@ class Container:
         return out
 
     @staticmethod
-    def _stop_container(sha_id):
+    def _stop_container(sha_id: str):
         """stop a docker container."""
         cmd = f"docker stop {sha_id}"
         cmd = sx.split(cmd)
@@ -43,7 +43,7 @@ class Container:
         sps.run(cmd, shell=False, stdout=sps.PIPE).stdout.decode("utf-8")
 
     @staticmethod
-    def _remove_container(sha_id):
+    def _remove_container(sha_id: str):
         """stop a docker container."""
         cmd = f"docker rm {sha_id}"
         cmd = sx.split(cmd)
@@ -51,7 +51,7 @@ class Container:
         sps.run(cmd, shell=False, stdout=sps.PIPE).stdout.decode("utf-8")
 
     @staticmethod
-    def stop_rm_container(sha_id):
+    def stop_rm_container(sha_id: str):
         Container._stop_container(sha_id)
         Container._remove_container(sha_id)
 
