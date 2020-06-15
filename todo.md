@@ -17,3 +17,4 @@ TODO
 - HTML ouput
 - REST API layer to host this as a service and to communicate with the software over an API
 - A dockerfile that bundles the tool
+- add metadata info for output data as a separate file
