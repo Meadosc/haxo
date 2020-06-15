@@ -16,6 +16,7 @@ Installation
 ------------
 
 To install haxo project, run this command in your terminal:
+
 .. code-block:: console
   $ pip install haxo
 
@@ -25,7 +26,7 @@ Usage
 Haxo has a cli and it looks like:
 
 .. code-block:: console
-   Usage: haxo [OPTIONS] COMMAND [ARGS]...
+   $ Usage: haxo [OPTIONS] COMMAND [ARGS]...
 
   Haxo - look inside a docker image.
 
