@@ -1,14 +1,13 @@
-Reference
-=========
-
 .. contents::
-   :local:
-   :backlinks: none
+    :local:
+    :backlinks: none
+
 
 haxo.console
 ------------
 
 .. automodule:: haxo.console
+   :members:
 
 
 haxo.container

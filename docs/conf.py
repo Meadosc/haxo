@@ -1,7 +1,9 @@
 """sphinx config."""
+from datetime import datetime
+
 project = "haxo"
 author = "rahul"
 copyright = f"2020, {author}"
-extensions = ["sphinx.ext.autodoc",
- "sphinx.ext.napoleon"]
-# sphinx_autodoc_typehints
+copyright = f"{datetime.now().year}, {author}"
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx_autodoc_typehints"]
+html_static_path = ["_static"]

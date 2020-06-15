@@ -2,8 +2,8 @@ Haxo - What's inside my docker image
 ====================================
 
 .. toctree::
-   :hidden:
-   :maxdepth: 1
+  :hidden:
+  :maxdepth: 1
 
   license
   reference
@@ -18,7 +18,9 @@ Installation
 To install haxo project, run this command in your terminal:
 
 .. code-block:: console
-  $ pip install haxo
+
+   $ pip install haxo
+
 
 Usage
 -----
@@ -26,14 +28,15 @@ Usage
 Haxo has a cli and it looks like:
 
 .. code-block:: console
-   $ Usage: haxo [OPTIONS] COMMAND [ARGS]...
+
+   $ haxo [OPTIONS] COMMAND [ARGS]...
 
   Haxo - look inside a docker image.
 
   This tool can be used to get information on system packages installed in a
   container image using package managers such as apt, dnf, rpm, pip and npm.
 
-  Options:
+.. option::
     --version  Show the version and exit.
     --help     Show this message and exit.
 
