@@ -4,10 +4,22 @@
 
 List deb, rpm, pip and npm packages installed in a docker image.
 
+### Install
+
+```bash
+git clone <repo> && cd haxo && pip install .
+```
+
 ### Usage
 
 ```
-Usage: haxo.py [OPTIONS] COMMAND [ARGS]...
+haxo <pkg_manager> <image:tag> --show
+```
+
+This will create a `data` directory and cache the info in the directory.
+
+```
+Usage: haxo [OPTIONS] COMMAND [ARGS]...
 
   Haxo - look inside a docker image.
 
@@ -25,6 +37,13 @@ Commands:
 ```
 
 - apt packages with Licenses
+
+```bash
+haxo apt-licenses <image:tag> --show 
+```
+
+This will create a data directory, parse the image and list the licenses.
+
 
 ```bash
 --  -------------------  ------------
