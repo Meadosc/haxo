@@ -833,18 +833,18 @@ description = "A rewrite of the builtin doctest module"
 name = "xdoctest"
 optional = false
 python-versions = "*"
-version = "0.11.0"
+version = "0.12.0"
 
 [package.dependencies]
 six = "*"
 
 [package.extras]
-all = ["six", "pytest", "pytest-cov", "codecov", "pygments", "colorama"]
+all = ["six", "pytest", "pytest-cov", "codecov", "scikit-build", "cmake", "ninja", "pybind11", "pygments", "colorama"]
 optional = ["pygments", "colorama"]
-tests = ["pytest", "pytest-cov", "codecov"]
+tests = ["pytest", "pytest-cov", "codecov", "scikit-build", "cmake", "ninja", "pybind11"]
 
 [metadata]
-content-hash = "fcce542e0401a34b7c8da80525823d7b8a708b2b61cda8adacc7f8fb171c88d9"
+content-hash = "c6ba5574319eefc96f842a86cab40d2e0593a31e893175420ab17edbf844f331"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1297,6 +1297,6 @@ wcwidth = [
     {file = "wcwidth-0.2.4.tar.gz", hash = "sha256:8c6b5b6ee1360b842645f336d9e5d68c55817c26d3050f46b235ef2bc650e48f"},
 ]
 xdoctest = [
-    {file = "xdoctest-0.11.0-py2.py3-none-any.whl", hash = "sha256:292d8c0e8de9bcab6ce3fa5009da445278ce343c744aa2ae260710f924c5242e"},
-    {file = "xdoctest-0.11.0.tar.gz", hash = "sha256:71951c60bb8b15fdf3c368c5636a6bbbd658ef5c2e5949e784adf5e1a1275fbd"},
+    {file = "xdoctest-0.12.0-py2.py3-none-any.whl", hash = "sha256:82424d2cc4b6d6b96b7b7134c81e97a4594c536547c1954533128a6a26cf1cb2"},
+    {file = "xdoctest-0.12.0.tar.gz", hash = "sha256:2d985d8d78d4444079d3b072965327ab06a5e6dcb4882f3561d7596eb4da6b13"},
 ]
