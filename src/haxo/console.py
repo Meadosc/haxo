@@ -2,6 +2,7 @@
 import click
 
 from haxo.pkg_info import runner
+from haxo.diff import difference
 
 from . import __version__
 
@@ -103,3 +104,20 @@ def pip(image, format="csv", license="spdx", show=False):
         show: show output to screen
     """
     runner(image, pkg_manager="pip", format=format, license=license, show=show)
+
+
+@cli.command("diff")
+@click.argument("old", type=str)
+@click.argument("new", type=str)
+def diff(old, new):
+    """difference between packages in two csv files output from haxo
+
+    Creates two csv files and saves them to data/diff directory
+    by default with csv files concated and appended with 'added'
+    and 'removed'.
+
+    Arguments:
+        old: str of path to old image csv file
+        new: str of path to new image csv file
+    """
+    difference(old, new)

@@ -1,4 +1,5 @@
 """utils to helpout."""
+import os
 import pathlib
 import shlex as sx
 import subprocess as sps
@@ -45,6 +46,44 @@ def image_sha_name(name: str) -> List[str]:
             exit(1)
 
     return out.split(",")
+
+
+def csv_to_df(path):
+    """wrapper for pandas read_csv"""
+    return pandas.read_csv(path)
+
+ 
+def compare_dataframes(old_df, new_df):
+    """ get difference between two dataframes.
+    Return the added and removed elements. """
+    diff_df = old_df.merge(new_df,how='right',indicator=True)
+    df_added = diff_df[diff_df['_merge']=='right_only'].drop(columns='_merge')
+    df_removed = diff_df[diff_df['_merge']=='left_only'].drop(columns='_merge')
+    return df_added, df_removed
+
+
+def strip_path(file_path: str):
+    """
+    strip the path and extension out of a file path
+
+    returns filename (string)
+    """
+    return os.path.splitext(os.path.basename(file_path))[0]
+
+    
+def save_diff(diff_df, old_name, new_name, added=True):
+    """
+    save the csv that is the difference between two csvs.
+    Name the csv with a combination of the old names and
+    a label stating whether it represents added packages
+    or removed packages.
+    """
+    name = f"{strip_path(old_name)}_{strip_path(new_name)}"
+    if added:
+        name = f"{name}_added.csv"
+    else:
+        name = f"{name}_removed.csv" 
+    diff_df.to_csv(f"data/diff/{name}", index=False)
 
 
 if __name__ == "__main__":
