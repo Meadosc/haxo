@@ -1,8 +1,10 @@
 ## Haxo - what's inside my docker image?
 
-![haxo](icon.jpg)
+<p align="center">
+  <img src="icon.jpg"/>
+  </p>
 
-List deb, rpm, pip and npm packages installed in a docker image.
+**List deb, rpm, pip and npm packages installed in a docker image.**
 
 ### Install
 
