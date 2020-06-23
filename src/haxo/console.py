@@ -110,7 +110,9 @@ def pip(image, format="csv", license="spdx", show=False):
 @click.argument("old", type=str)
 @click.argument("new", type=str)
 def diff(old, new):
-    """difference between packages in two csv files output from haxo
+    """find difference between packages in two csv files.
+
+    Designed for output from haxo
 
     Creates two csv files and saves them to data/diff directory
     by default with csv files concated and appended with 'added'
